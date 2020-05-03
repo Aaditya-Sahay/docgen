@@ -4,6 +4,7 @@ import  { getSortedData } from '../lib/docs'
 
 
 export default function Home({allDocs}) {
+  console.log(allDocs)
   return (
     <Layout chapterList={allDocs}>
       <Head>

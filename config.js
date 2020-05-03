@@ -12,15 +12,24 @@ export const config = {
         h3: "20px",
         p: "18px",
         a: "18px",
-        primaryFont: "EconSansOS",
-        alternateFont: "MiloTEOS"
+        code: "16px",
+        primaryFont: "Telex",
+        alternateFont: "'Ubuntu', sans-serif",
+        googleFontsUrl: "https://fonts.googleapis.com/css?family=Telex|Ubuntu&display=swap"
     },
     sideBar: {
-        width:"300px",
+        maxWidth:"250px",
         visible: true,
-        background: "",
-        foreground: "",
-        hover: "",
-        fontSize: ""
+        background: "#f7f7f7",
+        foreground: "#100303",
+        border: "#95389e",
+        hover: "#95389e",
+        fontSize: "18px"
+    },
+    spacings: {
+        std: "1rem",
+        half: "0.5rem",
+        double: "2rem",
+        extra: "3rem"
     }
 }
