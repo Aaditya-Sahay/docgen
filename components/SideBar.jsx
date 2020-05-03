@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 
 export default function SideBar({ initialToggle = true, chapterList }) {
     const [toggled, setToggled] = useState(initialToggle)
+    const [filter, setFiltered] = useState("")
     const { typography, spacings, sideBar } = config
     const router = useRouter()
     const styling = css`
@@ -15,13 +16,24 @@ export default function SideBar({ initialToggle = true, chapterList }) {
         width: 100%;
         background: ${sideBar.background};
         position: sticky;
+        top: 0;
+        height: 100vh;
         border-right: 1px solid ${sideBar.border};
         transition: all 0.25s ease-in-out;
         ${!toggled && `
             transform: translateX(-100%);
             width: 0;
         `}
-        div {
+        input {
+            width: 90%;
+            padding: ${spacings.half};
+            margin: 0 ${spacings.std};
+            margin-top: -2rem;
+            margin-bottom: 2rem;
+            font-size: 14px;
+            font-family: ${typography.alternateFont};
+        }
+        div:first-of-type {
             position: relative;
             left: 100%;
             top: 2rem;
@@ -82,6 +94,18 @@ export default function SideBar({ initialToggle = true, chapterList }) {
             }
         }
     `
+    let filteredList = chapterList.filter(elem =>{
+        if (elem.title.toLowerCase().includes(filter)) {
+            return true 
+        }
+        for (let subelem of elem.sublist){
+            if (subelem.toLowerCase().includes(filter)){
+                return true
+            }
+        }
+        return false
+    })
+    /*@TODO: add debounce here */
 
     return (
         <>
@@ -92,10 +116,10 @@ export default function SideBar({ initialToggle = true, chapterList }) {
                             <MenuLeft />
                         </button>
                     </div>
-
-                    {chapterList.map((elem) => {
+                    <input role="search" placeholder="Search" onChange={(e)=>{setFiltered(e.target.value)}}></input>
+                    {filteredList.map((elem) => {
                         return (
-                            <section key={elem.index*8}>
+                            <section key={elem.index * 8}>
                                 <Link href={'/docs/[slug]'} as={`/docs/${elem.slug}`}>
                                     <a className={router.asPath == `/docs/${elem.slug}` ? 'active' : 'not-active'}>
                                         {elem.title}
@@ -105,7 +129,7 @@ export default function SideBar({ initialToggle = true, chapterList }) {
                                     {elem.sublist.map((subelem, index) => {
                                         return (
 
-                                            <Link key={index*100} href={'/docs/[slug]'} as={`/docs/${elem.slug}`}>
+                                            <Link key={index * 100} href={'/docs/[slug]'} as={`/docs/${elem.slug}`}>
                                                 <li>
                                                     {subelem}
                                                 </li>
