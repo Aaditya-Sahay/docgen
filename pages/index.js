@@ -19,7 +19,7 @@ export default function Home({allDocs}) {
 
 
 export async function getStaticProps() {
-  const allDocs = getSortedData()
+  const allDocs = await getSortedData()
   return {
       props: {
           allDocs

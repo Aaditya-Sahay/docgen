@@ -15,7 +15,7 @@ export default function Page({ postData, allDocs }) {
 }
 
 export async function getStaticPaths() {
-    let data = getSortedData()
+    let data = await getSortedData()
     let paths = data.map(entry => {
         return {
             params: {
@@ -34,7 +34,7 @@ export async function getStaticProps({ params }) {
   
     const postData = await getPostData(params.page)
 
-    let allDocs = getSortedData()
+    let allDocs = await getSortedData()
     return {
         props: {
             postData,
