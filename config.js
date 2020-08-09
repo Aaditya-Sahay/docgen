@@ -1,10 +1,17 @@
-export const config = {
+module.exports.config = {
+    siteMetadata: {
+        name: "Doc Generator",
+        description: "",
+    },
+    docPath: "docs",
+    basePath: "",
     colors: {
-        background: "#f7f7f7",
-        foreground: "#100303",
+        background: "#222831",
+        foreground: "#ececec",
         link: "#43d8c9",
-        hover: "#95389e",
-        border: "#95389e"
+        hover: "#f2a365",
+        border: "#95389e",
+        codeTheme: ""
     },
     typography: {
         h1: "32px",
@@ -18,12 +25,12 @@ export const config = {
         googleFontsUrl: "https://fonts.googleapis.com/css?family=Telex|Ubuntu&display=swap"
     },
     sideBar: {
-        maxWidth:"250px",
+        maxWidth:"275px",
         visible: true,
-        background: "#f7f7f7",
-        foreground: "#100303",
-        border: "#95389e",
-        hover: "#95389e",
+        background: "#222831",
+        foreground: "#ececec",
+        border: "#f2a365",
+        hover: "#43d8c9",
         fontSize: "18px"
     },
     spacings: {

@@ -3,8 +3,9 @@ import { css } from '@emotion/core'
 import { config } from '../config'
 import LeftArrow from './icons/LeftArrow'
 import RightArrow from './icons/RightArrow'
+import Link from './Link'
 
-export default function Reader({ HTML }) {
+export default function Reader({ HTML, previous, next}) {
 
     const { typography, colors, spacings } = config
 
@@ -83,6 +84,7 @@ export default function Reader({ HTML }) {
                 margin: ${spacings.std} 0;
                 border-radius: 10px;
                 font-size: ${typography.code};
+                white-space: pre-wrap
             }
             a {
                 text-decoration: none;
@@ -106,15 +108,23 @@ export default function Reader({ HTML }) {
             </div>
             <div className="reading-zone">
                 <div className="arrow-div">
-                    <button>
-                        <LeftArrow/>
-                    </button>
+                    {previous &&
+                        <Link href={'/docs/[slug]'} as={`/docs/${previous}`}>
+                            <button>
+                                <LeftArrow />
+                            </button>
+                        </Link>
+                    }
                 </div>
                 <div className="content-holder" dangerouslySetInnerHTML={{ __html: HTML }} />
                 <div className="arrow-div">
-                    <button>
-                        <RightArrow/>
-                    </button>
+                    {next &&
+                        <Link href={'/docs/[slug]'} as={`/docs/${next}`}>
+                            <button>
+                                <RightArrow />
+                            </button>
+                        </Link>
+                    }
                 </div>
             </div>
 

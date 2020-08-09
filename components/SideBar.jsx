@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
+import Link from './Link'
 import MenuLeft from './icons/MenuLeft'
 import { css } from '@emotion/core'
 
 import { config } from '../config'
 import { useRouter } from 'next/router'
 
-export default function SideBar({ initialToggle = true, chapterList }) {
-    const [toggled, setToggled] = useState(initialToggle)
+export default function SideBar({ toggled = true, chapterList, handleChange }) {
     const [filter, setFiltered] = useState("")
     const { typography, spacings, sideBar } = config
     const router = useRouter()
@@ -19,7 +18,8 @@ export default function SideBar({ initialToggle = true, chapterList }) {
         top: 0;
         height: 100vh;
         border-right: 1px solid ${sideBar.border};
-        transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-out;
+        opacity: 1;
         ${!toggled && `
             transform: translateX(-100%);
             width: 0;
@@ -33,6 +33,7 @@ export default function SideBar({ initialToggle = true, chapterList }) {
             font-size: 14px;
             font-family: ${typography.alternateFont};
         }
+       
         div:first-of-type {
             position: relative;
             left: 100%;
@@ -42,6 +43,7 @@ export default function SideBar({ initialToggle = true, chapterList }) {
             border-top: 1px solid ${sideBar.border};
             border-radius: 2px;
             display: inline-block;
+            opacity: 1;
             &:hover {
                 button {
                     color: ${sideBar.hover};
@@ -77,6 +79,7 @@ export default function SideBar({ initialToggle = true, chapterList }) {
                 }
                 &.active {
                     font-weight: 600;
+                     color: ${sideBar.hover};
                 }
             }
             
@@ -90,16 +93,17 @@ export default function SideBar({ initialToggle = true, chapterList }) {
             li {
                 font-size: 14px;
                 padding-top: 0.5rem;
+                color: ${sideBar.foreground};
                 
             }
         }
     `
-    let filteredList = chapterList.filter(elem =>{
+    let filteredList = chapterList.filter(elem => {
         if (elem.title.toLowerCase().includes(filter)) {
-            return true 
+            return true
         }
-        for (let subelem of elem.sublist){
-            if (subelem.toLowerCase().includes(filter)){
+        for (let subelem of elem.sublist) {
+            if (subelem.toLowerCase().includes(filter)) {
                 return true
             }
         }
@@ -112,11 +116,11 @@ export default function SideBar({ initialToggle = true, chapterList }) {
             {sideBar.visible &&
                 <div css={styling}>
                     <div>
-                        <button onClick={() => setToggled(!toggled)}>
+                        <button onClick={() => handleChange(!toggled)}>
                             <MenuLeft />
                         </button>
                     </div>
-                    <input role="search" placeholder="Search" onChange={(e)=>{setFiltered(e.target.value)}}></input>
+                    <input role="search" placeholder="Search" onChange={(e) => { setFiltered(e.target.value) }}></input>
                     {filteredList.map((elem) => {
                         return (
                             <section key={elem.index * 8}>
